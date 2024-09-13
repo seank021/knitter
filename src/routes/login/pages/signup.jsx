@@ -5,7 +5,6 @@ export const Signup = () => {
     const isLoggedIn = sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
     useEffect(() => {
         if (isLoggedIn) {
-            alert("이미 로그인되어 있습니다.");
             window.location.href = "/";
         }
     }, [isLoggedIn]);
