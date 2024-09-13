@@ -12,12 +12,10 @@ export default function App() {
     }
   });
 
-  const isLoggedIn = sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
-
   return (
     <BrowserRouter>
       <Routes>
-        {isLoggedIn && <Route path="/" element={<Main />} />}
+        <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
