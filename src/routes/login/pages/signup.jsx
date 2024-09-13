@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { firebaseAuth, createUserWithEmailAndPassword } from "../../../firebase";
+import { TextInput } from "../../../components/input";
+import { Button } from "../../../components/button";
+import "../../../app.css";
 
 export const Signup = () => {
+    const navigate = useNavigate();
     const isLoggedIn = sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
     useEffect(() => {
         if (isLoggedIn) {
@@ -13,7 +18,11 @@ export const Signup = () => {
     const [password, setPassword] = useState("");
     const [passwordCheck, setPasswordCheck] = useState("");
 
-    const onSubmit = async (e) => {
+    const onLogin = () => {
+        navigate("/login");
+    }
+
+    const onSignup = async (e) => {
         e.preventDefault();
 
         if (password !== passwordCheck) {
@@ -42,29 +51,35 @@ export const Signup = () => {
     }
 
     return (
-        <div>
-            <input
-                type="email"
-                placeholder="이메일을 입력해주세요"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="비밀번호를 입력해주세요"
-                security="true"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="비밀번호를 다시 입력해주세요"
-                security="true"
-                value={passwordCheck}
-                onChange={(e) => setPasswordCheck(e.target.value)}
-            />
-
-            <button onClick={onSubmit}>회원가입</button>
+        <div className="center-screen-80">
+            <div className="flex flex-row justify-center items-center gap-7">
+                <div className="flex flex-col justify-center items-center gap-3">
+                    <TextInput
+                        type="email"
+                        placeholder="이메일을 입력해주세요"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextInput
+                        type="password"
+                        placeholder="비밀번호를 입력해주세요"
+                        security="true"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <TextInput
+                        type="password"
+                        placeholder="비밀번호를 다시 입력해주세요"
+                        security="true"
+                        value={passwordCheck}
+                        onChange={(e) => setPasswordCheck(e.target.value)}
+                    />
+                </div>
+                <div className="flex flex-col justify-center items-center gap-3">
+                    <Button onClick={onSignup}>회원가입</Button>
+                    <Button onClick={onLogin}>로그인 화면으로</Button>
+                </div>
+            </div>
         </div>
     );
 };

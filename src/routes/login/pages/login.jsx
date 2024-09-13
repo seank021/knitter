@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { firebaseAuth, signInWithEmailAndPassword } from "../../../firebase";
 import { setPersistence, browserSessionPersistence } from "firebase/auth";
+import { TextInput } from "../../../components/input";
+import { Button } from "../../../components/button";
+import "../../../app.css";
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -35,23 +38,28 @@ export const Login = () => {
     }
 
     return (
-        <div>
-            <input
-                type="email"
-                placeholder="이메일을 입력하세요"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="비밀번호를 입력하세요"
-                security="true"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={onLogin}>로그인</button>
-
-            <button onClick={onSignup}>회원가입</button>
+        <div className="center-screen-80">
+            <div className="flex flex-row justify-center items-center gap-7">
+                <div className="flex flex-col justify-center items-center gap-3">
+                    <TextInput
+                        type="email"
+                        placeholder="이메일을 입력해주세요"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextInput
+                        type="password"
+                        placeholder="비밀번호를 입력해주세요"
+                        security="true"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="flex flex-col justify-center items-center gap-3">
+                    <Button onClick={onLogin}>로그인</Button>
+                    <Button onClick={onSignup}>회원가입 화면으로</Button>
+                </div>
+            </div>
         </div>
     );
 };
