@@ -229,7 +229,7 @@ export const DesignCreate = () => {
             <div className="flex flex-col gap-5 mt-10 mb-10">
                 <div className="flex flex-row justify-center gap-5">
                     <Button onClick={onReset}>취소하기</Button>
-                    <Button onClick={onSave}>저장하기</Button>
+                    <Button onClick={onSave}>생성하기</Button>
                 </div>
                 <div className="flex flex-row justify-center gap-5">
                     <Button onClick={downloadPNG}>이미지(png) 다운로드</Button>
