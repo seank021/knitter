@@ -39,6 +39,7 @@ export const Login = () => {
 
     return (
         <div className="center-screen-80">
+            <h1 className="text-4xl font-bold mb-5">🄻🄴🅃'🅂 ​ 🄺🄽🄸🅃!</h1>
             <div className="flex flex-row justify-center items-center gap-7">
                 <div className="flex flex-col justify-center items-center gap-3">
                     <TextInput
