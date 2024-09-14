@@ -9,24 +9,34 @@ import { db } from "../../../firebase";
 export const Menu = ({ setDesign, isOpen, setIsOpen }) => {
     const [menu, setMenu] = useState(null);
     const [loading, setLoading] = useState(true);
-    const userId = JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]")).uid;
+    const [userId, setUserId] = useState(null);
+
     useEffect(() => {
-        const unsubscribe = onSnapshot(
-            collection(db, userId),
-            (snapshot) => {
-                const menuData = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                setMenu(menuData);
-                setLoading(false);
-            },
-            (error) => {
-                console.error("Error fetching documents: ", error);
-                setLoading(false);
-            }
-        );
-        return () => unsubscribe();
+        const user = JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]"));
+        if (user) {
+            setUserId(user.uid);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (userId) {
+            const unsubscribe = onSnapshot(
+                collection(db, userId),
+                (snapshot) => {
+                    const menuData = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                    setMenu(menuData);
+                    setLoading(false);
+                },
+                (error) => {
+                    console.error("Error fetching documents: ", error);
+                    setLoading(false);
+                }
+            );
+            return () => unsubscribe();
+        }
     }, [userId]);
 
     const onClickArrowLeft = () => {

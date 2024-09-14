@@ -11,6 +11,15 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 export const DesignCreate = () => {
+    const [userEmail, setUserEmail] = useState(null);
+    const [userId, setUserId] = useState(null);
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]"));
+        if (user) {
+            setUserEmail(user.email);
+            setUserId(user.uid);
+        }
+    }, []);
     const [designTitle, setDesignTitle] = useState("");
     const [designDescription, setDesignDescription] = useState("");
     const [selectedColor, setSelectedColor] = useState("#000000");
@@ -27,32 +36,34 @@ export const DesignCreate = () => {
         comments: null,
         like: 0,
         download: 0,
-        creator: JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]")).email,
+        creator: userEmail,
     });
 
-    const [nextId, setNextId] = useState(0);
+    const [id, setId] = useState(1);
     useEffect(() => {
-        const fetchNextId = async () => {
-            try {
-                const userId = JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]")).uid;
-                const designRef = collection(db, userId);
-                const q = query(designRef, orderBy("id", "desc"));
-                const querySnapshot = await getDocs(q);
-
-                if (!querySnapshot.empty) {
-                    const lastDoc = querySnapshot.docs[0];
-                    const lastId = lastDoc.data().id;
-                    setNextId(lastId + 1);
-                } else {
-                    setNextId(1);
+        const fetchDesignsCount = async () => {
+            if (userId) {
+                try {
+                    const designsRef = collection(db, userId);
+                    const snapshot = await getDocs(query(designsRef, orderBy('id')));
+                    const designsCount = snapshot.size;
+                    setId(designsCount + 1); // Set the new id
+                } catch (error) {
+                    console.error("Error fetching designs count:", error);
                 }
-            } catch (error) {
-                console.error("Error fetching next ID:", error);
             }
         };
+        fetchDesignsCount();
+    }, [userId]);
 
-        fetchNextId();
-    }, []);
+    useEffect(() => {
+        if (userEmail) {
+            setDesign(prevDesign => ({
+                ...prevDesign,
+                creator: userEmail,
+            }));
+        }
+    }, [userEmail]);
 
     const handleCellClick = (row, column) => {
         const updatedCells = design.cells.map(cell => 
@@ -126,7 +137,7 @@ export const DesignCreate = () => {
                 comments: null,
                 like: 0,
                 download: 0,
-                creator: JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]")).email,
+                creator: userEmail,
             });
 
             setDesignTitle("");
@@ -144,13 +155,12 @@ export const DesignCreate = () => {
 
         if (window.confirm("저장하시겠습니까?")) {
             try {
-                const userId = JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]")).uid;
-                const designRef = doc(db, userId, nextId.toString());
+                const designRef = doc(db, userId, id.toString());
                 await setDoc(designRef, {
                     ...design,
                     title: designTitle,
                     description: designDescription,
-                    id: nextId,
+                    id: id,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 });

@@ -8,13 +8,7 @@ import "../../../css/app.css";
 
 export const Login = () => {
     const navigate = useNavigate();
-    const isLoggedIn = sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
-    useEffect(() => {
-        if (isLoggedIn) {
-            window.location.href = "/";
-        }
-    }, [isLoggedIn]);
-
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
