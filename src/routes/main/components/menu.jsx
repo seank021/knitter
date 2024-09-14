@@ -36,7 +36,7 @@ export const Menu = ({ setDesign, isOpen, setIsOpen }) => {
     }
 
     const onClickWrite = () => {
-        console.log("onClickWrite");
+        setDesign(null);
     }
 
     return (
