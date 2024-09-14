@@ -12,8 +12,10 @@ export const Main = () => {
     }, [isLoggedIn]);
 
     const onLogout = () => {
-        sessionStorage.removeItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
-        navigate("/login");
+        if (window.confirm("로그아웃 하시겠습니까?")) {
+            sessionStorage.removeItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
+            navigate("/login");
+        }
     }
 
     return (
