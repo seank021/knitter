@@ -1,0 +1,41 @@
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background-color: #292929;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1.2rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu.closed {
+    transform: translateX(-100%);
+}
+
+.menu.open {
+    transform: translateX(0);
+}
+
+.flex-grow {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.menu-open {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+}
+
+.menu-closed {
+    margin-left: 0;
+    width: 100%;
+}

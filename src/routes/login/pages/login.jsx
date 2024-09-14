@@ -4,7 +4,7 @@ import { firebaseAuth, signInWithEmailAndPassword } from "../../../firebase";
 import { setPersistence, browserSessionPersistence } from "firebase/auth";
 import { TextInput } from "../../../components/input";
 import { Button } from "../../../components/button";
-import "../../../app.css";
+import "../../../css/app.css";
 
 export const Login = () => {
     const navigate = useNavigate();

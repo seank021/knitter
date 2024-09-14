@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { firebaseAuth, createUserWithEmailAndPassword } from "../../../firebase";
 import { TextInput } from "../../../components/input";
 import { Button } from "../../../components/button";
-import "../../../app.css";
+import "../../../css/app.css";
 
 export const Signup = () => {
     const navigate = useNavigate();
