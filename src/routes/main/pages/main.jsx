@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Menu from "../components/menu";
 import Design from "../components/design";
 import Header from "../components/header";
+import "../../../css/menu.css";
 
 export const Main = () => {
     const isLoggedIn = sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
@@ -19,7 +20,7 @@ export const Main = () => {
             <Menu setDesign={setDesign} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
             <div className={`flex-grow ${isMenuOpen ? 'menu-open' : 'menu-closed'}`}>
                 <Header isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
-                <Design design={design} />
+                <Design design={design} setDesign={setDesign} />
             </div>
         </div>
     );

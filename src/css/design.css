@@ -1,20 +1,45 @@
 .design-wrapper {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh + 200px);
+    margin-top: 30px;
+    width: 100%;
 }
 
 .design-container {
     display: grid;
-    grid-template-columns: repeat(var(--grid-width), 15px); /* Set grid columns based on width */
-    grid-template-rows: repeat(var(--grid-height), 15px); /* Set grid rows based on height */
+    grid-template-columns: repeat(var(--grid-width), 15px);
+    grid-template-rows: repeat(var(--grid-height), 15px);
     gap: 0;
     border: 0.5px solid #000;
+    position: relative;
 }
 
 .cell {
     width: 15px;
     height: 15px;
     border: 0.5px solid #000;
+    box-sizing: border-box;
+    cursor: pointer;
 }
+
+.resize-handler {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Resize handlers for each corner */
+.add-row-top { top: -35px; left: calc(50% - 25px); }
+.remove-row-top { top: -35px; left: calc(50% + 10px); }
+.add-row-bottom { bottom: -35px; left: calc(50% - 25px); }
+.remove-row-bottom { bottom: -35px; left: calc(50% + 10px); }
+.add-col-left { top: calc(50% - 25px); left: -35px; }
+.remove-col-left { top: calc(50% + 10px); left: -35px; }
+.add-col-right { top: calc(50% - 25px); right: -35px; }
+.remove-col-right { top: calc(50% + 10px); right: -35px; }

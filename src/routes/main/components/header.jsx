@@ -13,7 +13,7 @@ export const Header = ({ isOpen, setIsOpen }) => {
     }
 
     return (
-        <div className="sticky top-0 z-10 flex flex-row w-full h-[30px] justify-between items-center p-[1rem] pt-8 pb-8 border-black border-b-[1px]">
+        <div className="z-10 flex flex-row w-full h-[30px] justify-between items-center p-[1rem] pt-8 pb-8 border-black border-b-[1px]">
             <div className="flex flex-row items-center gap-1">
                 <img src={arrowright} alt="arrowright" className={`${isOpen ? "hidden" : "w-6 h-6 cursor-pointer mr-1"}`} onClick={() => setIsOpen(!isOpen)} />
                 <img src={profile} alt="profile" className="w-8 h-8" />
