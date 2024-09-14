@@ -12,7 +12,7 @@ export const Menu = ({ setDesign, isOpen, setIsOpen }) => {
     const userId = JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]")).uid;
     useEffect(() => {
         const unsubscribe = onSnapshot(
-            collection(db, userId), // 컬렉션 참조
+            collection(db, userId),
             (snapshot) => {
                 const menuData = snapshot.docs.map(doc => ({
                     id: doc.id,
@@ -28,8 +28,6 @@ export const Menu = ({ setDesign, isOpen, setIsOpen }) => {
         );
         return () => unsubscribe();
     }, [userId]);
-
-    console.log(menu);
 
     const onClickArrowLeft = () => {
         setIsOpen(!isOpen);
