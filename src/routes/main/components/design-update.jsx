@@ -96,6 +96,11 @@ export const DesignUpdate = ({ design, setDesign }) => {
     };
 
     const onSave = async () => {
+        if (!designTitle || !designDescription) {
+            alert("도안의 제목과 설명을 입력하세요.");
+            return;
+        }
+
         if (window.confirm("수정하시겠습니까?")) {
             try {
                 const designRef = doc(db, userId, String(design.id));
