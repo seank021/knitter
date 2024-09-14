@@ -1,0 +1,20 @@
+.design-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.design-container {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-width), 15px); /* Set grid columns based on width */
+    grid-template-rows: repeat(var(--grid-height), 15px); /* Set grid rows based on height */
+    gap: 0;
+    border: 0.5px solid #000;
+}
+
+.cell {
+    width: 15px;
+    height: 15px;
+    border: 0.5px solid #000;
+}
