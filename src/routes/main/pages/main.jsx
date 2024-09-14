@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Menu from "../components/menu";
+import Design from "../components/design";
+import Header from "../components/header";
 
 export const Main = () => {
-    const navigate = useNavigate();
-
     const isLoggedIn = sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
     useEffect(() => {
         if (!isLoggedIn) {
@@ -11,16 +11,15 @@ export const Main = () => {
         }
     }, [isLoggedIn]);
 
-    const onLogout = () => {
-        if (window.confirm("로그아웃 하시겠습니까?")) {
-            sessionStorage.removeItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]");
-            navigate("/login");
-        }
-    }
+    const [design, setDesign] = useState(null);
 
     return (
-        <div>
-            <button onClick={onLogout}>로그아웃</button>
+        <div className="app flex flex-row justify-center items-center">
+            <Menu setDesign={setDesign} />
+            <div className="flex-grow">
+                <Header />
+                <Design />
+            </div>
         </div>
     );
 };
