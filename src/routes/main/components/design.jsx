@@ -6,7 +6,7 @@ import DesignUpdate from "./design-update";
 export const Design = ({ design, setDesign }) => {
     if (design === null) {
         return (
-            <DesignCreate />
+            <DesignCreate setDesign={setDesign} />
         );
     }
 

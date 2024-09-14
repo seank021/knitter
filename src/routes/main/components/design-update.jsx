@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../css/design.css";
 import ColorPicker from "./color-picker";
 import { TextInputLarge, LongTextInput } from "../../../components/input";
@@ -15,6 +15,11 @@ export const DesignUpdate = ({ design, setDesign }) => {
     const [designTitle, setDesignTitle] = useState(design.title);
     const [designDescription, setDesignDescription] = useState(design.description);
     const [selectedColor, setSelectedColor] = useState("#000000");
+
+    useEffect(() => {
+        setDesignTitle(design.title);
+        setDesignDescription(design.description);
+    }, [design]);
 
     const handleCellClick = (row, column) => {
         const updatedCells = design.cells.filter(c => !(c.row === row && c.column === column));
@@ -136,8 +141,8 @@ export const DesignUpdate = ({ design, setDesign }) => {
     return (
         <div className="design-wrapper gap-10">
             <div className="flex flex-col justify-between gap-3">
-                <TextInputLarge type="text" placeholder={design.title} value={designTitle} onChange={e => setDesignTitle(e.target.value)} />
-                <LongTextInput type="text" placeholder={design.description} value={designDescription} onChange={e => setDesignDescription(e.target.value)} />
+                <TextInputLarge type="text" placeholder="도안의 제목을 입력하세요" value={designTitle} onChange={e => setDesignTitle(e.target.value)} />
+                <LongTextInput type="text" placeholder="도안에 대한 설명을 입력하세요" value={designDescription} onChange={e => setDesignDescription(e.target.value)} />
             </div>
             <div className="flex flex-row justify-between gap-3">
                 선택한 색상: <ColorPicker color={selectedColor} onChange={setSelectedColor} />
