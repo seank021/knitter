@@ -5,7 +5,7 @@ import { TextInputLarge, LongTextInput } from "../../../components/input";
 import { Button } from "../../../components/button";
 import plus from "../../../assets/icons/plus.png";
 import minus from "../../../assets/icons/minus.png";
-import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -123,6 +123,23 @@ export const DesignUpdate = ({ design, setDesign }) => {
         }
     };
 
+    const onDelete = async () => {
+        if (window.confirm("이 도안을 삭제하시겠습니까?")) {
+            try {
+                const designRef = doc(db, userId, String(design.id));
+                await deleteDoc(designRef);
+                
+                console.log("Design deleted successfully.");
+                alert("도안이 삭제되었습니다.");
+                window.location.reload();
+            } catch (error) {
+                console.error("Error deleting design:", error);
+            }
+        } else {
+            console.log("Design deletion cancelled.");
+        }
+    };
+
     const downloadPNG = () => {
         html2canvas(document.querySelector(".design-container")).then(canvas => {
             const link = document.createElement('a');
@@ -187,11 +204,16 @@ export const DesignUpdate = ({ design, setDesign }) => {
                 <div className="resize-handler remove-col-right" onClick={() => handleResize('remove-col-right')}><img src={minus} alt="-" /></div>
             </div>
             
-            <div className="flex flex-row justify-between gap-3 mt-7 mb-10">
-                <Button onClick={onReset}>취소하기</Button>
-                <Button onClick={onSave}>수정하기</Button>
-                <Button onClick={downloadPNG}>이미지(png) 다운로드</Button>
-                <Button onClick={downloadPDF}>파일(pdf) 다운로드</Button>
+            <div className="flex flex-col gap-5 mt-10 mb-10">
+                <div className="flex flex-row justify-center gap-5">
+                    <Button onClick={onReset}>취소하기</Button>
+                    <Button onClick={onSave}>수정하기</Button>
+                    <Button onClick={onDelete}>삭제하기</Button>
+                </div>
+                <div className="flex flex-row justify-center gap-5">
+                    <Button onClick={downloadPNG}>이미지(png) 다운로드</Button>
+                    <Button onClick={downloadPDF}>파일(pdf) 다운로드</Button>
+                </div>
             </div>
         </div>
     );
