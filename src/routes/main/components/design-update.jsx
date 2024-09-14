@@ -6,6 +6,8 @@ import plus from "../../../assets/icons/plus.png";
 import minus from "../../../assets/icons/minus.png";
 import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export const DesignUpdate = ({ design, setDesign }) => {
     const userId = JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]")).uid;
@@ -104,9 +106,29 @@ export const DesignUpdate = ({ design, setDesign }) => {
             console.log("Design update cancelled.");
         }
     };
+
+    const downloadPNG = () => {
+        html2canvas(document.querySelector(".design-container")).then(canvas => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'design.png';
+            link.click();
+        });
+    };
+
+    const downloadPDF = () => {
+        html2canvas(document.querySelector(".design-container")).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            const imgWidth = 210; // A4 width in mm
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            pdf.save('design.pdf');
+        });
+    };
     
     return (
-        <div className="design-wrapper gap-12">
+        <div className="design-wrapper gap-16">
             <div className="flex flex-row justify-between gap-3">
                 선택한 색상: <ColorPicker color={selectedColor} onChange={setSelectedColor} />
             </div>
@@ -148,6 +170,8 @@ export const DesignUpdate = ({ design, setDesign }) => {
             <div className="flex flex-row justify-between gap-3 mt-7 mb-10">
                 <Button onClick={onReset}>취소하기</Button>
                 <Button onClick={onSave}>수정하기</Button>
+                <Button onClick={downloadPNG}>이미지(png) 다운로드</Button>
+                <Button onClick={downloadPDF}>파일(pdf) 다운로드</Button>
             </div>
         </div>
     );
