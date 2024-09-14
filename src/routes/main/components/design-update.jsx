@@ -100,6 +100,7 @@ export const DesignUpdate = ({ design, setDesign }) => {
                     cells: design.cells,
                     title: designTitle,
                     description: designDescription,
+                    updatedAt: new Date()
                 });
 
                 console.log("Design updated successfully.");
