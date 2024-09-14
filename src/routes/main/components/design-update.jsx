@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../../css/design.css";
 import ColorPicker from "./color-picker";
+import { TextInputLarge, LongTextInput } from "../../../components/input";
 import { Button } from "../../../components/button";
 import plus from "../../../assets/icons/plus.png";
 import minus from "../../../assets/icons/minus.png";
@@ -11,6 +12,8 @@ import jsPDF from "jspdf";
 
 export const DesignUpdate = ({ design, setDesign }) => {
     const userId = JSON.parse(sessionStorage.getItem("firebase:authUser:" + process.env.REACT_APP_API_KEY + ":[DEFAULT]")).uid;
+    const [designTitle, setDesignTitle] = useState(design.title);
+    const [designDescription, setDesignDescription] = useState(design.description);
     const [selectedColor, setSelectedColor] = useState("#000000");
 
     const handleCellClick = (row, column) => {
@@ -94,7 +97,9 @@ export const DesignUpdate = ({ design, setDesign }) => {
                 await updateDoc(designRef, {
                     width: design.width,
                     height: design.height,
-                    cells: design.cells
+                    cells: design.cells,
+                    title: designTitle,
+                    description: designDescription,
                 });
 
                 console.log("Design updated successfully.");
@@ -128,7 +133,11 @@ export const DesignUpdate = ({ design, setDesign }) => {
     };
     
     return (
-        <div className="design-wrapper gap-16">
+        <div className="design-wrapper gap-10">
+            <div className="flex flex-col justify-between gap-3">
+                <TextInputLarge type="text" placeholder={design.title} value={designTitle} onChange={e => setDesignTitle(e.target.value)} />
+                <LongTextInput type="text" placeholder={design.description} value={designDescription} onChange={e => setDesignDescription(e.target.value)} />
+            </div>
             <div className="flex flex-row justify-between gap-3">
                 선택한 색상: <ColorPicker color={selectedColor} onChange={setSelectedColor} />
             </div>
