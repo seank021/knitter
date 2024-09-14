@@ -19,7 +19,7 @@ export const Main = () => {
             <Menu setDesign={setDesign} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
             <div className={`flex-grow ${isMenuOpen ? 'menu-open' : 'menu-closed'}`}>
                 <Header isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
-                <Design />
+                <Design design={design} />
             </div>
         </div>
     );
