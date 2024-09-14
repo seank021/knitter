@@ -11,13 +11,14 @@ export const Main = () => {
         }
     }, [isLoggedIn]);
 
+    const [isMenuOpen, setIsMenuOpen] = useState(true);
     const [design, setDesign] = useState(null);
 
     return (
-        <div className="app flex flex-row justify-center items-center">
-            <Menu setDesign={setDesign} />
-            <div className="flex-grow">
-                <Header />
+        <div className="app flex flex-row">
+            <Menu setDesign={setDesign} isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+            <div className={`flex-grow ${isMenuOpen ? 'menu-open' : 'menu-closed'}`}>
+                <Header isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
                 <Design />
             </div>
         </div>

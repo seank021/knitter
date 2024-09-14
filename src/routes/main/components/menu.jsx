@@ -3,9 +3,9 @@ import '../../../app.css';
 import arrowleft from '../../../assets/icons/arrowleft.svg';
 import write from '../../../assets/icons/write.svg';
 
-export const Menu = ({ setDesign }) => {
+export const Menu = ({ setDesign, isOpen, setIsOpen }) => {
     const onClickArrowLeft = () => {
-        console.log("onClickArrowLeft");
+        setIsOpen(!isOpen);
     }
 
     const onClickWrite = () => {
@@ -13,7 +13,7 @@ export const Menu = ({ setDesign }) => {
     }
 
     return (
-        <div className="menu">
+        <div className={`menu ${isOpen ? 'open' : 'closed'}`}>
             <div className="flex flex-row justify-between items-center mb-5">
                 <img onClick={onClickArrowLeft} src={arrowleft} alt="arrowleft" className="w-6 h-6 cursor-pointer" />
                 <img onClick={onClickWrite} src={write} alt="write" className="w-6 h-6 cursor-pointer" />
