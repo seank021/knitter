@@ -188,7 +188,7 @@ export const DesignCreate = () => {
                 <TextInputLarge type="text" placeholder="도안의 제목을 입력하세요" value={designTitle} onChange={e => setDesignTitle(e.target.value)} />
                 <LongTextInput type="text" placeholder="도안에 대한 설명을 입력하세요" value={designDescription} onChange={e => setDesignDescription(e.target.value)} />
             </div>
-            <div className="flex flex-row justify-between gap-3">
+            <div className="flex flex-row justify-between gap-3 mb-5">
                 선택한 색상: <ColorPicker color={selectedColor} onChange={setSelectedColor} />
             </div>
 
@@ -226,11 +226,15 @@ export const DesignCreate = () => {
                 <div className="resize-handler remove-col-right" onClick={() => handleResize('remove-col-right')}><img src={minus} alt="-" /></div>
             </div>
             
-            <div className="flex flex-row justify-between gap-3 mt-7 mb-10">
-                <Button onClick={onReset}>취소하기</Button>
-                <Button onClick={onSave}>저장하기</Button>
-                <Button onClick={downloadPNG}>이미지(png) 다운로드</Button>
-                <Button onClick={downloadPDF}>파일(pdf) 다운로드</Button>
+            <div className="flex flex-col gap-5 mt-10 mb-10">
+                <div className="flex flex-row justify-center gap-5">
+                    <Button onClick={onReset}>취소하기</Button>
+                    <Button onClick={onSave}>저장하기</Button>
+                </div>
+                <div className="flex flex-row justify-center gap-5">
+                    <Button onClick={downloadPNG}>이미지(png) 다운로드</Button>
+                    <Button onClick={downloadPDF}>파일(pdf) 다운로드</Button>
+                </div>
             </div>
         </div>
     );

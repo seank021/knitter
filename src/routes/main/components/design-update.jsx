@@ -166,7 +166,7 @@ export const DesignUpdate = ({ design, setDesign }) => {
                 <TextInputLarge type="text" placeholder="도안의 제목을 입력하세요" value={designTitle} onChange={e => setDesignTitle(e.target.value)} />
                 <LongTextInput type="text" placeholder="도안에 대한 설명을 입력하세요" value={designDescription} onChange={e => setDesignDescription(e.target.value)} />
             </div>
-            <div className="flex flex-row justify-between gap-3">
+            <div className="flex flex-row justify-between gap-3 mb-5">
                 선택한 색상: <ColorPicker color={selectedColor} onChange={setSelectedColor} />
             </div>
 
